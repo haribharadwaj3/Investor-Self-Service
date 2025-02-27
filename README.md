@@ -2,11 +2,11 @@
 A front-end web application designed to help users manage their investments efficiently. The application provides an interactive stock graph, portfolio management, quicklist functionality, and notifications for stock trends.
 
 # Features
-## Stock Data Visualization - View real-time stock trends through an interactive API-driven graph on the investment page.
-## Portfolio Management - Track stocks you've invested in.
-## Quicklist - Select stocks to buy or invest in conveniently.
-## Notifications - Stay updated with the latest stock market trends.
-## Responsive UI - Built with Bootstrap for a smooth user experience across devices.
+### Stock Data Visualization - View real-time stock trends through an interactive API-driven graph on the investment page.
+### Portfolio Management - Track stocks you've invested in.
+### Quicklist - Select stocks to buy or invest in conveniently.
+### Notifications - Stay updated with the latest stock market trends.
+### Responsive UI - Built with Bootstrap for a smooth user experience across devices.
 
 # Live Demo
 🔗 Investor Self-Service Application: [https://haribharadwaj3.github.io/Investor-Self-Service/]
@@ -14,7 +14,7 @@ A front-end web application designed to help users manage their investments effi
 # Technologies Used
 HTML5
 CSS3
-JavaScript (ES6+)
+JavaScript 
 Bootstrap
 
 # How It Works
