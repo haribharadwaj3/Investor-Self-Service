@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM4mME+6X7ZHgFjl8QFFRZu9nk7EZ2Vw3lfbA8C" crossorigin="anonymous">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            overflow-y: auto; 
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            margin: 0;
+            position: relative;
+            overflow: hidden;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('designer.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: blur(3px); 
+            z-index: -1; 
+            transform: scale(1.1);
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 5px 10px;
+            height: 80px;
+            position: relative;
+            z-index: 1;
+        }
+        .logo img {
+            height: 60px;
+            width: 200px;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown .dropbtn {
+            color: white;
+            font-size: 1.8rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            outline: none;
+            margin-top: 8px;
+            margin-right: 10px;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            min-width: 150px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            z-index: 2;
+        }
+        .dropdown-content a {
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            display: block;
+            border-radius: 5px;
+        }
+
+        .dropdown-content a:hover {
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            padding: 80px;
+        }
+
+        .content {
+            width: 700px;
+            height: 500px;
+            border-radius: 8px;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            z-index: 1; 
+        }
+
+        .sidebar {
+            width: 35%;
+            padding: 20px;
+            margin: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            position: relative;
+            z-index: 1; 
+        }
+
+        .sidebar h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .sidebar button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar button:hover {
+            background-color: #c82333;
+        }
+
+        a{
+            text-decoration: none;
+        }
+        .modal {
+            display: none; 
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4); 
+        }
+
+        .modal-content {
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 60%;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .close {
+            color: white;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #ccc;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .alert-list {
+            margin-top: 20px;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="Logo.jpg" alt="Investor Self Service">
+        </div>
+        <h1 style="color: white; font-size: 1.5rem;">Investment Services</h1>
+        <nav>
+            <ul style="display: flex; align-items: center; list-style-type: none;">
+                <li class="dropdown">
+                    <button class="dropbtn"><i class="fas fa-user-circle"></i></button>
+                    <div class="dropdown-content">
+                        <a href="#">Profile</a><hr>
+                        <a href="#">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <div>
+            <div class="content">
+                <div class="tradingview-widget-container">
+                    <div id="tradingview_aapl"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+                    <script type="text/javascript">
+                        new TradingView.widget({
+                            "width": 700,
+                            "height": 500,
+                            "symbol": "NASDAQ:AAPL",
+                            "interval": "D",
+                            "timezone": "Etc/UTC",
+                            "theme": "dark",
+                            "style": "1",
+                            "locale": "en",
+                            "toolbar_bg": "#f1f3f6",
+                            "enable_publishing": false,
+                            "withdateranges": true,
+                            "hide_side_toolbar": false,
+                            "allow_symbol_change": true,
+                            "container_id": "tradingview_aapl"
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar">
+            <h3>About Transactions</h3>
+            <a href="portfolio.html">
+                <button>Portfolio</button>
+            </a>
+            <br>
+            <br>
+            <h3>Other Options</h3>
+            <a href="quick list.html">
+                <button>Quick List</button>
+            </a>
+            <br>
+            <br>
+            <h3>Alerts</h3>
+            <a href="#" id="openModalBtn">
+                <button>Notifications</button>
+            </a>
+        </div>
+    </div>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Alert Notifications</h2>
+            <div class="alert-list">
+                <ul id="alertList">
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script>
+        let alerts = [
+            "Stock A has hit the target price.",
+            "Your portfolio value has increased by 5%.",
+            "New market update available for your stocks."
+        ];
+        function renderAlerts() {
+            const alertList = document.getElementById("alertList");
+            alertList.innerHTML = ''; // Clear the existing list
+            alerts.forEach(alert => {
+                const li = document.createElement("li");
+                li.textContent = alert;
+                alertList.appendChild(li);
+            });
+        }
+        var modal = document.getElementById("myModal");
+        var btn = document.getElementById("openModalBtn");
+        var span = document.getElementsByClassName("close")[0];
+        btn.onclick = function() {
+            renderAlerts(); 
+            modal.style.display = "block";
+        }
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+        function addAlert(alertMessage) {
+            alerts.push(alertMessage);
+            renderAlerts(); 
+        }
+    </script>
+</body>
+</html>

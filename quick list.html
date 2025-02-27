@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            overflow-y: auto; 
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            margin: 0;
+            position: relative;
+            overflow: hidden;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('designer.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: blur(3px); 
+            z-index: -1; 
+            transform: scale(1.1); 
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 5px 10px;
+            height: 80px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo img {
+            height: 60px;
+            width: 200px;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown .dropbtn {
+            color: white;
+            font-size: 1.8rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            outline: none;
+            margin-top: 20px;
+            margin-right: 10px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position:absolute;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            min-width: 150px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            z-index: 2;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 5px 15px;
+            text-decoration: none;
+            display: block;
+            border-radius: 5px;
+        }
+
+        .dropdown-content a:hover {
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+
+        .container {
+            max-width: 1000px;
+            margin:70px auto 20px auto;
+            background: rgba(0, 0, 0, 0.85);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+
+        h1, h2 {
+            color: #ff4d4d;
+            
+        }
+
+        h3 {
+            color: white;
+            margin-bottom: 10px; 
+        }
+
+        .filters {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            margin-bottom: 10px;
+            flex: 1;
+            min-width: 200px;
+            margin-right: 10px;
+        }
+
+        .filter-group label {
+            margin-right: 10px;
+            font-weight: bold;
+            color: white; 
+        }
+
+        select {
+            padding: 5px;
+            font-size: 16px;
+            background-color: #333;
+            color: white;
+            border: none;
+            width: 100%;
+        }
+
+        .schemes-list {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .scheme {
+            background: #2b3c3f; 
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        .scheme p {
+            margin: 5px 0;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #ff3333;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #e60000;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="Logo.jpg" alt="Investor Self Service">
+        </div>
+        <h1 style="color: white; font-size: 1.5rem;">Quick List</h1>
+        <nav>
+            <ul style="display: flex; align-items: center; list-style-type: none;">
+                <li class="dropdown">
+                    <button class="dropbtn"><i class="fas fa-user-circle"></i></button>
+                    <div class="dropdown-content">
+                        <a href="profile.html">Profile</a>
+                        <hr>
+                        <a href="#">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <h1>Investment Schemes List</h1>
+        <div class="filters">
+            <div class="filter-group">
+                <label for="risk">Risk Level</label>
+                <select id="risk" onchange="filterSchemes()">
+                    <option value="all">All</option>
+                    <option value="conservative">Conservative</option>
+                    <option value="moderate">Moderate</option>
+                    <option value="aggressive">Aggressive</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="horizon">Investment Horizon</label>
+                <select id="horizon" onchange="filterSchemes()">
+                    <option value="all">All</option>
+                    <option value="short">Short-term (1-3 years)</option>
+                    <option value="medium">Medium-term (3-5 years)</option>
+                    <option value="long">Long-term (5+ years)</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="tax">Tax Benefits</label>
+                <select id="tax" onchange="filterSchemes()">
+                    <option value="all">All</option>
+                    <option value="tax-saving">Tax-saving (80C)</option>
+                    <option value="non-tax-saving">Non-Tax Saving</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="investmentType">Investment Type</label>
+                <select id="investmentType" onchange="filterSchemes()">
+                    <option value="all">All</option>
+                    <option value="mutual-funds">Mutual Funds</option>
+                    <option value="sip">Systematic Investment Plan (SIP)</option>
+                    <option value="etf">Exchange-Traded Funds (ETFs)</option>
+                    <option value="aif">Alternative Investment Funds (AIF)</option>
+                    <option value="ulip">Unit Linked Insurance Plans (ULIP)</option>
+                </select>
+            </div>
+        </div>
+        <h1>Available Schemes</h1>
+        <div class="schemes-list" id="scheme-container">
+            <!-- Schemes will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <script>
+        const schemes = [
+            { name: 'Equity Fund - Large Cap', risk: 'aggressive', horizon: 'long', tax: 'non-tax-saving', investmentType: 'mutual-funds', description: 'Invests in large-cap companies for long-term growth.' },
+            { name: 'Tax Saver Fund (ELSS)', risk: 'moderate', horizon: 'long', tax: 'tax-saving', investmentType: 'mutual-funds', description: 'Offers tax benefits under Section 80C.' },
+            { name: 'Debt Fund', risk: 'conservative', horizon: 'short', tax: 'non-tax-saving', investmentType: 'mutual-funds', description: 'Invests in fixed-income securities for stable returns.' },
+            { name: 'Index Fund', risk: 'moderate', horizon: 'long', tax: 'non-tax-saving', investmentType: 'mutual-funds', description: 'Tracks a market index for returns similar to the market.' },
+            { name: 'ULIP - Life Plan', risk: 'moderate', horizon: 'long', tax: 'tax-saving', investmentType: 'ulip', description: 'Combines insurance with investment options.' },
+            { name: 'SIP Growth Plan', risk: 'moderate', horizon: 'medium', tax: 'non-tax-saving', investmentType: 'sip', description: 'Systematic investment plan for disciplined investing.' },
+            { name: 'ETF - Gold Fund', risk: 'moderate', horizon: 'long', tax: 'non-tax-saving', investmentType: 'etf', description: 'Invests in gold bullion for diversification.' },
+            { name: 'AIF - Venture Fund', risk: 'aggressive', horizon: 'long', tax: 'non-tax-saving', investmentType: 'aif', description: 'Invests in startup ventures for high returns.' },
+            { name: 'Balanced Fund', risk: 'moderate', horizon: 'medium', tax: 'non-tax-saving', investmentType: 'mutual-funds', description: 'Invests in a mix of equity and debt for balanced growth.' },
+        ];
+
+        function filterSchemes() {
+            const riskFilter = document.getElementById('risk').value;
+            const horizonFilter = document.getElementById('horizon').value;
+            const taxFilter = document.getElementById('tax').value;
+            const investmentTypeFilter = document.getElementById('investmentType').value;
+
+            const filteredSchemes = schemes.filter(scheme => {
+                const riskMatch = (riskFilter === 'all' || scheme.risk === riskFilter);
+                const horizonMatch = (horizonFilter === 'all' || scheme.horizon === horizonFilter);
+                const taxMatch = (taxFilter === 'all' || scheme.tax === taxFilter);
+                const investmentTypeMatch = (investmentTypeFilter === 'all' || scheme.investmentType === investmentTypeFilter);
+                return riskMatch && horizonMatch && taxMatch && investmentTypeMatch;
+            });
+
+            displaySchemes(filteredSchemes);
+        }
+
+        function displaySchemes(schemes) {
+            const container = document.getElementById('scheme-container');
+            container.innerHTML = '';
+
+            schemes.forEach(scheme => {
+                const schemeDiv = document.createElement('div');
+                schemeDiv.classList.add('scheme');
+                schemeDiv.innerHTML = `
+                    <h3>${scheme.name}</h3>
+                    <p><strong>Risk Level:</strong> ${scheme.risk}</p>
+                    <p><strong>Investment Horizon:</strong> ${scheme.horizon}</p>
+                    <p><strong>Tax Benefits:</strong> ${scheme.tax}</p>
+                    <p><strong>Investment Type:</strong> ${scheme.investmentType}</p>
+                    <p>${scheme.description}</p>
+                    <button onclick="invest('${scheme.name}')">Invest Now</button>
+                `;
+                container.appendChild(schemeDiv);
+            });
+        }
+
+        function invest(schemeName) {
+            window.location.href = `payment.html?scheme=${encodeURIComponent(schemeName)}`;
+        }
+        displaySchemes(schemes);
+    </script>
+</body>
+</html>

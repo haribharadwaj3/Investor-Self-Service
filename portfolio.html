@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Portfolio Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM4mME+6X7ZHgFjl8QFFRZu9nk7EZ2Vw3lfbA8C" crossorigin="anonymous">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        
+        body {
+            font-family: Arial, sans-serif;
+            color: #fff;
+            overflow: hidden;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('designer.jpg'); /* Background image */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: blur(3px); /* Adjust blur level */
+            z-index: -1;
+            transform: scale(1.1);
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.8); /* Darker header background */
+            padding: 10px 20px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .header-logo img {
+            width: 120px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        h1 {
+            font-size: 22px;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown .dropbtn {
+            color: white;
+            font-size: 1.8rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            min-width: 150px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            z-index: 2;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            display: block;
+            border-radius: 5px;
+        }
+
+        .dropdown-content a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            margin-top: 100px;
+            gap: 20px;
+        }
+
+        .card {
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            text-align: center;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .card h3 {
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: #ddd;
+        }
+
+        .card p {
+            font-size: 22px;
+            font-weight: bold;
+            color: #ff4d4d;
+        }
+
+        .graphs {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding: 20px;
+        }
+
+        .graph {
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            flex: 1;
+            margin: 0 10px;
+            text-align: center;
+        }
+
+        .graph canvas {
+            width: 100%;
+            height: 250px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-logo">
+            <img src="Logo.jpg" alt="Logo">
+            <h1>Investment Portfolio Management</h1>
+        </div>
+        <nav>
+            <ul style="display: flex; align-items: center; list-style-type: none;">
+                <li class="dropdown">
+                    <button class="dropbtn"><i class="fas fa-user-circle"></i></button>
+                    <div class="dropdown-content">
+                        <a href="#">Profile</a>
+                        <hr>
+                        <a href="#">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h3>Total Amount</h3>
+            <p>$2.36M</p>
+        </div>
+        <div class="card">
+            <h3>Investment</h3>
+            <p>1,321</p>
+        </div>
+        <div class="card">
+            <h3>Rate</h3>
+            <p>0.4%</p>
+        </div>
+        <div class="card">
+            <h3>Risks</h3>
+            <p>4</p>
+        </div>
+    </div>
+
+    <div class="graphs">
+        <div class="graph">
+            <h3>Flow Performance</h3>
+            <canvas id="flowPerformanceChart"></canvas>
+        </div>
+        <div class="graph">
+            <h3>Investment Status</h3>
+            <canvas id="investmentStatusChart"></canvas>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const apiKey = 'YOUR_ALPHA_VANTAGE_API_KEY';  // Replace with your API key
+
+        async function fetchStockData(symbol) {
+            const url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&apikey=${apiKey}`;
+            const response = await fetch(url);
+            const data = await response.json();
+            const timeSeries = data['Time Series (Daily)'];
+            const labels = [];
+            const stockPrices = [];
+            for (const date in timeSeries) {
+                labels.push(date);
+                stockPrices.push(parseFloat(timeSeries[date]['4. close']));
+            }
+            return { labels: labels.reverse(), data: stockPrices.reverse() };
+        }
+
+        const flowCtx = document.getElementById('flowPerformanceChart').getContext('2d');
+        const flowPerformanceChart = new Chart(flowCtx, {
+            type: 'line',
+            data: {
+                labels: ['Loading...'],
+                datasets: [{
+                    label: 'Flow',
+                    data: [0],
+                    borderColor: 'rgba(255, 77, 77, 1)',
+                    backgroundColor: 'rgba(255, 77, 77, 0.2)',
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: '#ddd'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: '#ddd'
+                        }
+                    }
+                }
+            }
+        });
+
+        const statusCtx = document.getElementById('investmentStatusChart').getContext('2d');
+        const investmentStatusChart = new Chart(statusCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Loading...'],
+                datasets: [{
+                    label: 'Investment',
+                    data: [0],
+                    backgroundColor: 'rgba(255, 77, 77, 0.6)'
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: '#ddd'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: '#ddd'
+                        }
+                    }
+                }
+            }
+        });
+
+        fetchStockData('AAPL').then(stockData=>{
+            flowPerformanceChart.data.labels=stockData.labels;
+            flowPerformanceChart.data.datasets[0].data=stockData.data;
+            flowPerformanceChart.update();
+            investmentStatusChart.data.labels=stockData.labels;
+            investmentStatusChart.data.datasets[0].data=stockData.data;
+            investmentStatusChart.update();
+        });
+    </script>
+
+</body>
+</html>

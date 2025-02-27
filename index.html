@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investor Self Service</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="Logo.jpg" alt="Investor Self Service">
+        </div>
+        <nav>
+            <ul>
+                
+                <li><a href="#" id="aboutLink">About</a></li>
+                
+                <li><a href="#" id="contactLink">Contact Us</a></li>
+                <li><a href="#" id="signinBtn">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section class="info">
+            <br>
+            <br>
+            <br>
+            <h2 style="margin:0px 400px 0px 400px;">Welcome to Investor Self Service</h2>
+            <div class="info-container">
+                <div class="info-text">
+                    <p>Manage your investments efficiently and securely with our self-service platform.</p>
+                </div>        
+            </div>
+        </section>
+    </main>
+    <div class="modal" id="contactModal">
+        <div class="modal-content contact-content">
+            <span class="close-contact">&times;</span>
+            <h2>Contact Us</h2>
+            <p>To improve our services, please provide your feedback...</p>
+            <form>
+                <label for="name">Name*</label>
+                <input type="text" id="name" name="name" placeholder="Enter your Name" required>
+                <label for="mobile">Mobile Number*</label>
+                <input type="text" id="mobile" name="mobile" placeholder="Enter your Mobile Number" required>
+                <label for="email">Email*</label>
+                <input type="email" id="email" placeholder="Enter your Email" name="email">
+                <label for="location">Location</label>
+                <input type="text" id="location" placeholder="Enter your Location" name="location">
+                <label for="feedback">Feedback*</label>
+                <textarea id="feedback" name="feedback" placeholder="Please provide your Feedback" required></textarea>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="form-wrapper">
+                <h2 id="formTitle">Login</h2>
+                <form id="authForm">
+                    <div class="form-control">
+                        <input type="text" required>
+                        <label>Username or Email</label>
+                    </div>
+                    <div class="form-control">
+                        <input type="password" required id="loginPassword">
+                        <label>Password</label>
+                        <span class="eye-icon" id="toggleLoginPassword">👁️</span>
+                    </div>
+                    <button type="button" onclick="redirectToInvestment()">Sign In</button>
+                </form>
+                <p><a href="#" id="showSignup">Sign up</a></p>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="aboutModal">
+        <div class="modal-content">
+            <span class="close-about">&times;</span>
+            <h2>About Investor Self Service</h2>
+            <p>
+                Investor Self Service is a secure and efficient platform designed to empower investors by giving them control over their investment portfolios. With our easy-to-use interface, investors can track their investments, perform transactions, and manage their accounts with just a few clicks.
+                Our platform ensures data security and provides real-time updates on the status of your investments.
+            </p>
+            <h3>Key Features</h3>
+            <ul>
+                <li>Easy portfolio management</li>
+                <li>Real-time investment tracking</li>
+                <li>Secure transactions</li>
+                <li>Comprehensive reports and analytics</li>
+                <li>24/7 customer support</li>
+                <li>Access to market insights and news</li>
+                <li>Instant notifications for transaction updates</li>
+            </ul>
+        </div>    
+    </div>
+    <script src="scripts.js"></script>
+</body>
+</html>
